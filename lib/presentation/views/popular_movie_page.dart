@@ -5,20 +5,31 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../cubit/popular_movies_cubit.dart';
 
 class PopularMoviePage extends StatefulWidget {
-  const PopularMoviePage({Key? key, required this.popularMoviesCubit})
+  const PopularMoviePage({Key? key})
       : super(key: key);
-  final PopularMoviesCubit popularMoviesCubit;
 
   @override
   State<PopularMoviePage> createState() => _PopularMoviePageState();
 }
 
 class _PopularMoviePageState extends State<PopularMoviePage> {
+  final PopularMoviesCubit _popularMoviesCubit = PopularMoviesCubit();
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
+  loadData() {
+    _popularMoviesCubit.getPopularMovieList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(
-        create: (context) => widget.popularMoviesCubit,
+        create: (context) => _popularMoviesCubit,
         child: BlocBuilder<PopularMoviesCubit, PopularMoviesState>(
           builder: (context, state) {
             if (state is PopularMoviesSuccessState) {
