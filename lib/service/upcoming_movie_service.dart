@@ -5,8 +5,8 @@ import '../config/constants.dart';
 import '../config/url_constants.dart';
 import '../model/popular_movies_response_model.dart';
 
-class PopularMoviesService {
-  Future<List<PopularMovieResponseResult>?> getPopularMovieList() async {
+class UpcomingMoviesService {
+  Future<List<PopularMovieResponseResult>?> getUpcomingMovieList() async {
     Map<String, dynamic> queryParameters = {
       'api_key': Constants.apiKey,
       'language': Constants.language,
@@ -15,8 +15,8 @@ class PopularMoviesService {
 
     try {
       final uri =
-          Uri.parse('${UrlConstants.host}${UrlConstants.popularMovies()}')
-              .replace(queryParameters: queryParameters);
+      Uri.parse('${UrlConstants.host}${UrlConstants.upComingMovies()}')
+          .replace(queryParameters: queryParameters);
 
       final response = await http.get(uri);
 
@@ -24,7 +24,7 @@ class PopularMoviesService {
         final body = jsonDecode(response.body);
 
         PopularMoviesResponseModel popularMovieResponse =
-            PopularMoviesResponseModel.fromJson(body);
+        PopularMoviesResponseModel.fromJson(body);
 
         return popularMovieResponse.results;
       } else {
